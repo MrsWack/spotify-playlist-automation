@@ -10,12 +10,13 @@ import requests
 # ============================================================
 
 TARGET_PLAYLISTS = {
-    "Drive – Warm":  lambda f: f["energy"] >= 0.80 and f["valence"] >= 0.50,
-    "Drive – Dark":  lambda f: f["energy"] >= 0.80 and f["valence"] <  0.50,
-    "Flow – Warm":   lambda f: 0.55 <= f["energy"] < 0.80 and f["valence"] >= 0.50,
-    "Flow – Dark":   lambda f: 0.55 <= f["energy"] < 0.80 and f["valence"] <  0.50,
-    "Down":          lambda f: f["energy"] <  0.55,
+    "Good Vibes Rollin'":  lambda f: f["energy"] >= 0.80 and f["valence"] >= 0.50,
+    "Just fall.":          lambda f: f["energy"] >= 0.80 and f["valence"] <  0.50,
+    "Läuft einfach.":      lambda f: 0.55 <= f["energy"] < 0.80 and f["valence"] >= 0.50,
+    "into the mind":       lambda f: 0.55 <= f["energy"] < 0.80 and f["valence"] <  0.50,
+    "feel the exhale":     lambda f: f["energy"] <  0.55,
 }
+
 
 MASTER_PLAYLIST_NAME = os.getenv("MASTER_PLAYLIST_NAME", "MASTER")
 
