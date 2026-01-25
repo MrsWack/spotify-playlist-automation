@@ -1,0 +1,32 @@
+name: Spotify Playlist Automation (DRY RUN)
+
+on:
+  schedule:
+    # GitHub cron läuft in UTC und kennt keine Sommerzeit.
+    # Wir lassen den Workflow zweimal laufen; das Script selbst führt nur um 05:00 Europe/Berlin aus.
+    - cron: "0 3 * * *"   # 03:00 UTC -> 05:00 CEST (Sommerzeit)
+    - cron: "0 4 * * *"   # 04:00 UTC -> 05:00 CET (Winterzeit)
+  workflow_dispatch:
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run sorter (dry run)
+        env:
+          SPOTIFY_ACCESS_TOKEN: ${{ secrets.SPOTIFY_ACCESS_TOKEN }}
+          SPOTIFY_USER_ID: ${{ secrets.SPOTIFY_USER_ID }}
+          MASTER_PLAYLIST_NAME: "MASTER"
+          DRY_RUN: "true"
+        run: python sorter.py
