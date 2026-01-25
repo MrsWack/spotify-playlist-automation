@@ -15,18 +15,20 @@ Quelle:
 - `MASTER` (wird **nur gelesen**, niemals verändert)
 
 Ziel-Playlists (werden vom Script verwaltet):
-- `Drive – Warm`
-- `Drive – Dark`
-- `Flow – Warm`
-- `Flow – Dark`
-- `Down`
+- `Good Vibes Rollin'`
+- `Just fall.`
+- `Läuft einfach.`
+- `into the mind`
+- `feel the exhale`
+
 
 ## Regeln (Energy / Valence)
-- Drive – Warm:  energy >= 0.80  AND valence >= 0.50
-- Drive – Dark:  energy >= 0.80  AND valence <  0.50
-- Flow – Warm:   0.55 <= energy < 0.80 AND valence >= 0.50
-- Flow – Dark:   0.55 <= energy < 0.80 AND valence <  0.50
-- Down:          energy <  0.55
+- Good Vibes Rollin':  energy >= 0.80  AND valence >= 0.50
+- Just fall.:          energy >= 0.80  AND valence <  0.50
+- Läuft einfach.:      0.55 <= energy < 0.80 AND valence >= 0.50
+- into the mind:       0.55 <= energy < 0.80 AND valence <  0.50
+- feel the exhale:     energy <  0.55
+
 
 ## Zeitplan (05:00 Berlin, DST-sicher)
 GitHub cron läuft in UTC und kennt keine Sommerzeit.
