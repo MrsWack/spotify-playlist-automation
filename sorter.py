@@ -48,10 +48,16 @@ DRY_RUN = os.getenv("DRY_RUN", "true").lower() in ("1", "true", "yes")
 # SPOTIFY API
 # ============================================================
 
-SPOTIFY_TOKEN = os.getenv("SPOTIFY_ACCESS_TOKEN", "").strip()
+SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID", "").strip()
+SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET", "").strip()
+SPOTIFY_REFRESH_TOKEN = os.getenv("SPOTIFY_REFRESH_TOKEN", "").strip()
+
+SPOTIFY_TOKEN = ""  # wird pro Lauf automatisch geholt
 SPOTIFY_USER_ID = os.getenv("SPOTIFY_USER_ID", "").strip()
 
 API = "https://api.spotify.com/v1"
+TOKEN_URL = "https://accounts.spotify.com/api/token"
+
 
 def die(msg):
     raise SystemExit(msg)
