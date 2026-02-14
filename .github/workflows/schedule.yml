@@ -1,4 +1,4 @@
-name: Spotify Playlist Automation (DRY RUN)
+name: Spotify Playlist Automation
 
 on:
   schedule:
