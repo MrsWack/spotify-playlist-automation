@@ -28,5 +28,5 @@ jobs:
           SPOTIFY_ACCESS_TOKEN: ${{ secrets.SPOTIFY_ACCESS_TOKEN }}
           SPOTIFY_USER_ID: ${{ secrets.SPOTIFY_USER_ID }}
           MASTER_PLAYLIST_NAME: "MASTER"
-          DRY_RUN: "true"
+          DRY_RUN: "false"
         run: python sorter.py
