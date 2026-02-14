@@ -62,6 +62,32 @@ TOKEN_URL = "https://accounts.spotify.com/api/token"
 def die(msg):
     raise SystemExit(msg)
 
+def refresh_access_token():
+    global SPOTIFY_TOKEN
+
+    if not SPOTIFY_CLIENT_ID or not SPOTIFY_CLIENT_SECRET or not SPOTIFY_REFRESH_TOKEN:
+        die("Missing SPOTIFY_CLIENT_ID / SPOTIFY_CLIENT_SECRET / SPOTIFY_REFRESH_TOKEN")
+
+    r = requests.post(
+        TOKEN_URL,
+        data={
+            "grant_type": "refresh_token",
+            "refresh_token": SPOTIFY_REFRESH_TOKEN,
+            "client_id": SPOTIFY_CLIENT_ID,
+            "client_secret": SPOTIFY_CLIENT_SECRET,
+        },
+        timeout=30,
+    )
+
+    if r.status_code != 200:
+        die(f"Refresh token failed: {r.status_code} {r.text}")
+
+    SPOTIFY_TOKEN = r.json().get("access_token", "").strip()
+
+    if not SPOTIFY_TOKEN:
+        die("No access_token returned from refresh")
+
+
 def headers():
     if not SPOTIFY_TOKEN:
         die("Missing SPOTIFY_ACCESS_TOKEN")
@@ -166,6 +192,9 @@ def main():
     if not should_run_now():
         print("Not 05:00 Berlin — exit")
         return
+        
+    refresh_access_token()
+
 
     me = get_me()
     uid = me["id"]
