@@ -116,7 +116,7 @@ def paginate(url):
     while url:
         r = request("GET", url)
         if r.status_code != 200:
-            die(f"Pagination failed: {r.status_code}")
+            die(f"Pagination failed: {r.status_code} {r.text}")
         data = r.json()
         yield data
         url = data.get("next")
