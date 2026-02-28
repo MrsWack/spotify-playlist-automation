@@ -189,9 +189,6 @@ def replace_playlist(pid, uris):
 # ============================================================
 
 def main():
-    if not should_run_now():
-        print("Not 05:00 Berlin — exit")
-        return
         
     refresh_access_token()
 
