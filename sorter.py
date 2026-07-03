@@ -127,12 +127,23 @@ def get_me():
         die("/me failed")
     return r.json()
 
-def find_playlist(name):
+def find_playlist(name, owner_id=None):
     url = f"{API}/me/playlists?limit=50"
     for page in paginate(url):
         for p in page.get("items", []):
-            if p.get("name") == name:
-                return p.get("id")
+            playlist_name = p.get("name")
+            playlist_id = p.get("id")
+            playlist_owner = (p.get("owner") or {}).get("id")
+
+            if playlist_name == name:
+                print(f"Found playlist candidate: name={playlist_name}, id={playlist_id}, owner={playlist_owner}")
+
+                if owner_id and playlist_owner != owner_id:
+                    print(f"Skipping playlist because owner does not match current user: {playlist_owner} != {owner_id}")
+                    continue
+
+                return playlist_id
+
     return None
 
 def create_playlist(name):
@@ -196,7 +207,7 @@ def main():
     me = get_me()
     uid = me["id"]
 
-    master_id = find_playlist(MASTER_PLAYLIST_NAME)
+    master_id = find_playlist(MASTER_PLAYLIST_NAME, uid)
     if not master_id:
         die("Master playlist not found")
 
