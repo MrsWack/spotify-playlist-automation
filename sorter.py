@@ -159,13 +159,29 @@ def create_playlist(name):
 
 def get_tracks(pid):
     tracks = []
-    url = f"{API}/playlists/{pid}/tracks?limit=100&fields=items(track(id,uri,is_local)),next"
+    url = f"{API}/playlists/{pid}/items?limit=50"
+
     for page in paginate(url):
         for it in page.get("items", []):
-            tr = it.get("track")
-            if not tr or tr.get("is_local"):
+            tr = it.get("track") or it.get("item")
+
+            if not tr:
                 continue
-            tracks.append({"id": tr["id"], "uri": tr["uri"]})
+
+            if it.get("is_local") or tr.get("is_local"):
+                continue
+
+            if tr.get("type") and tr.get("type") != "track":
+                continue
+
+            tid = tr.get("id")
+            uri = tr.get("uri")
+
+            if not tid or not uri:
+                continue
+
+            tracks.append({"id": tid, "uri": uri})
+
     return tracks
 
 def get_features(ids):
