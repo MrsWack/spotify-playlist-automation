@@ -189,7 +189,7 @@ def get_features(ids):
     for i in range(0, len(ids), 100):
         r = request("GET", f"{API}/audio-features?ids={','.join(ids[i:i+100])}")
         if r.status_code != 200:
-            die("Audio features failed")
+            die(f"Audio features failed: {r.status_code} {r.text}")
         for f in r.json().get("audio_features", []) or []:
             if f and f.get("id"):
                 feats[f["id"]] = {
